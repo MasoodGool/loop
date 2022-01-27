@@ -1,0 +1,30 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "backend api",
+    "main": "server.js",
+    "scripts": {
+        "build": "rm -rf build/ && prettier --write source/ && tsc",
+        "dev": "nodemon source/server.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MasoodGool/loop.git"
+    },
+    "author": "Masood Gool",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MasoodGool/loop/issues"
+    },
+    "homepage": "https://github.com/MasoodGool/loop#readme",
+    "dependencies": {
+        "body-parser": "^1.19.1",
+        "dotenv": "^14.3.2",
+        "express": "^4.17.2"
+    },
+    "devDependencies": {
+        "@types/body-parser": "^1.19.2",
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.12"
+    }
+}
