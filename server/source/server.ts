@@ -4,9 +4,33 @@ import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
 import apiRoutes from './routes/user';
+import mongoose from 'mongoose';
 
 const NAMESPACE = 'Server';
 const router = express();
+
+/** Connect to Mongo */
+mongoose
+    .connect(config.mongo.url, config.mongo.options)
+    .then((result) => {
+        logging.info(NAMESPACE, 'Mongo Connected');
+    })
+    .catch((error) => {
+        logging.error(NAMESPACE, error.message, error);
+    });
+
+/** Log the request */
+router.use((req, res, next) => {
+    /** Log the req */
+    logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+
+    res.on('finish', () => {
+        /** Log the res */
+        logging.info(NAMESPACE, `METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
+    });
+
+    next();
+});
 
 /** Log the request */
 router.use((req, res, next) => {
@@ -39,7 +63,7 @@ router.use((req, res, next) => {
 });
 
 /** Routes go here */
-router.use('/', apiRoutes);
+router.use('/api/users', apiRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {

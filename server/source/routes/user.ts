@@ -1,8 +1,9 @@
 import express from 'express';
-import controller from '../controllers/healthCheck';
+import controller from '../controllers/user';
 
 const router = express.Router();
 
-router.get('/poke', controller.serverHealthCheck);
+router.get('/get/users', controller.getAllUsers);
+router.post('/create/users', controller.createUser);
 
 export = router;
