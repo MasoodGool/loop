@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import logging from './config/logging';
 import config from './config/config';
-import apiRoutes from './routes/user';
+import userRoutes from './routes/user';
 import mongoose from 'mongoose';
 
 const NAMESPACE = 'Server';
@@ -63,7 +63,7 @@ router.use((req, res, next) => {
 });
 
 /** Routes go here */
-router.use('/api/users', apiRoutes);
+router.use('/users', userRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
