@@ -111,13 +111,14 @@ const getAllUsers = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const createUser = (req: Request, res: Response, next: NextFunction) => {
-    let { name, weight } = req.body;
+    let { username, password, weight } = req.body;
 
     console.log('Check Body', req);
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
-        name,
+        username,
+        password,
         weight
     });
 
