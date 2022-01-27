@@ -1,3 +1,0 @@
-# loop
-
-Weight Tracker App
