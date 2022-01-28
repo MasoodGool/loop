@@ -1,43 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import api from './api/index'
+import { Link } from "react-router-dom";
+import Login  from './Components/LoginForm';
+import Register from './Components/RegisterForm';
+import {Button} from './Components/Button';
 
 function App() {
 
-
-  const [loading, setLoading] = useState(true);
-  const [backendData, setBackendData] = useState([{}]);
+  const [login, setLogin] = useState(true);
 
 
-  useEffect(()=>{
+  const existingUser = () =>{
+    setLogin(!login)
+  }
 
 
-    const fetchData = async () =>{
-      setLoading(true);
-      try {
-        const {data: response} = await api.getAllUsers();
-        setBackendData(response);
-      } catch (error) {
-        console.error(error.message);
-      }
-      setLoading(false);
-    }
-
-    fetchData();
-
-
-
-  },[])
 
   return (
     <div>
-    {loading && <div>Loading</div>}
-    {!loading && (
-      <div>
-        <h2>Doing stuff with data</h2>
-        {backendData.users.map((user,i) => (<p key={i}>{user.username}</p>))}
-      </div>
+
+    {login && <> Login <Login/></>}
+    {!login && (
+      <>
+        Register
+    <Register/>
+      </>
     )}
+
+    
+    <Button onClick={existingUser}>
+      Don't have an account yet?
+    </Button>
+    <Button>
+      Logout
+    </Button>
+    <Link to="/dashboard">Dashboard</Link> |{" "}
     </div>
   )
 }
