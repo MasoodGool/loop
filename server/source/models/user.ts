@@ -6,7 +6,11 @@ const UserSchema: Schema = new Schema(
     {
         username: { type: String, required: true },
         password: { type: String, required: true },
-        weight: { type: Number, required: true }
+        weight: [
+            {
+                type: Number
+            }
+        ]
     },
     {
         timestamps: true
