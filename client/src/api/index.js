@@ -5,17 +5,19 @@ const api = axios.create({
 })
 
 
-export const getAllUsers = () => api.get(`/get/all`)
-export const insertUser = payload => api.post(`/user`, payload)
-export const updateUserById = (id, payload) => api.put(`/user/${id}`, payload)
+export const login = (payload) => api.post(`/login`, payload)
+export const register = payload => api.post(`/sign_up`, payload, )
+export const validate = (payload, config) => api.post(`/validate`, payload, config);
+export const updateUserById = (id, payload) => api.put(`/save_weight/${id}`, payload)
 export const deleteUserById = id => api.delete(`/user/${id}`)
-export const getUserById = id => api.post(`/save_weight`, id)
+export const getUserById = username => api.get(`/get_weight_history`, { params: { username } })
 const apis = {
-    getAllUsers,
-    insertUser,
+    login,
+    register,
     updateUserById,
     deleteUserById,
     getUserById,
+    validate
 }
 
 export default apis

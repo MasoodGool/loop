@@ -11,7 +11,8 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     logging.info(NAMESPACE, 'Token validated, user authorized.');
 
     return res.status(200).json({
-        message: 'Token(s) validated'
+        message: 'Token(s) validated',
+        validated: true
     });
 };
 
@@ -138,7 +139,7 @@ const saveWeight = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getWeights = (req: Request, res: Response, next: NextFunction) => {
-    let { username, password } = req.body;
+    let { username } = req.query;
     User.findOne({ username: username })
         .select('weight')
         .exec()
