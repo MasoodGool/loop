@@ -1,18 +1,31 @@
 import React from 'react';
-import styled from "styled-components";
-import LoginForm from "./LoginForm"
+import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button  } from './FormStyles'
 
-export default function Login() {
+export default function Login(props) {
+
+  const existingUser = props.existingUser;
+
   return (
-  <Wrapper>
-      <LoginForm/>
-  </Wrapper>
+  <Form>
+    <Heading>{existingUser ? "Welcome Back!" : "Sign Up"}</Heading>
+    <Field>
+      <Legend>Log In</Legend>
+      <List>
+        <ListItem>
+          <Label>Username:</Label>
+          <Input></Input>
+        </ListItem>
+        <ListItem>
+          <Label>Password:</Label>
+          <Input></Input>
+        </ListItem>
+      </List>
+    </Field>
+    <Button>Login</Button>
+    <Button>Create an account</Button>
+    
+  </Form>
   
   )
 }
-
-const Wrapper = styled.section`
-  padding: 4em;
-  background: #55640f;
-`;
 

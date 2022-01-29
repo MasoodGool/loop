@@ -66,7 +66,7 @@ app.use((req, res, next) => {
 });
 
 /** Routes go here */
-app.use('/', userRoutes);
+app.use('/api', userRoutes);
 
 /** Error handling */
 app.use((req, res, next) => {

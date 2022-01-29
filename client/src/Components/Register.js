@@ -1,18 +1,33 @@
 import React from 'react';
-import styled from "styled-components";
-import RegisterForm from "./RegisterForm"
+import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button  } from './FormStyles'
 
 export default function Register() {
   return (
-  <Wrapper>
-      <RegisterForm/>
-  </Wrapper>
+  <Form>
+    <Heading>Sign Up!</Heading>
+    <Field>
+      <Legend>Create Account</Legend>
+      <List>
+        <ListItem>
+          <Label>Username:</Label>
+          <Input></Input>
+        </ListItem>
+        <ListItem>
+          <Label>Password:</Label>
+          <Input></Input>
+        </ListItem>
+        <ListItem>
+          <Label>
+            Username
+          </Label>
+        </ListItem>
+      </List>
+    </Field>
+    <Button>Login</Button>
+    <Button>Create an account</Button>
+    
+  </Form>
   
   )
 }
-
-const Wrapper = styled.section`
-  padding: 4em;
-  background: #6a1959;
-`;
 
