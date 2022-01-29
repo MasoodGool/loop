@@ -2,38 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Login  from './Components/Login';
-import Register from './Components/Register';
-import {Button} from './Components/FormStyles';
 
 function App() {
 
-  const [existingUser, setExistingUser] = useState(true);
-
-
-  const returnCheck = () =>{
-    setExistingUser(!existingUser)
-  }
-
-
-
   return (
-    <div>
-
+    <>
     <Section>
-      <Login existingUser={existingUser}/>
+      <Login/>
     </Section>  
-
-    
-
-    
-    <Button onClick={returnCheck}>
-      Don't have an account yet?
-    </Button>
-    <Button>
-      Logout
-    </Button>
     <Link to="/dashboard">Dashboard</Link> |{" "}
-    </div>
+    </>
   )
 }
 
