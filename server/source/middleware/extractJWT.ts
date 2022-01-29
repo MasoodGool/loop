@@ -9,7 +9,6 @@ const extractJWT = (req: Request, res: Response, next: NextFunction) => {
     logging.info(NAMESPACE, 'Validating token');
 
     let token = req.headers.authorization?.split(' ')[1];
-    console.log('CHECKING TOKEN', token);
 
     if (token) {
         jwt.verify(token, config.server.token.secret, (error, decoded) => {

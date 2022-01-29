@@ -60,6 +60,10 @@ const Label = styled.label `
     }
 `
 
+const Error = styled.span `
+    color: #D0342C;
+`
+
 const Input = styled.input `
     padding: 5px;
     border: 1px solid #ddd;
@@ -106,4 +110,4 @@ const Section = styled.section `
 }
 `
 
-export { Section, Form, Heading, Field, Legend, List, ListItem, Label, Input, Button };
+export { Section, Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error };

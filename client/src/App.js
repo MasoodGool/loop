@@ -20,13 +20,12 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={value}>
         <Routes>
-          {!user && (
-            <Route path="/*" element={<WelcomePage />} />
-          )}
-          {user && (
+
+            <Route path="/" element={<WelcomePage />} />
+
+
           <Route path="/dashboard" element={<Dashboard/>} />  
-          )}
-          <Route path="*" element={<Navigate to={"/"} />}/>
+
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

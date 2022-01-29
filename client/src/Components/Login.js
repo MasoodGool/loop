@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext} from 'react';
 import api from '../api'
-import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button  } from './FormStyles'
+import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error } from './FormStyles'
 import { UserContext } from '../utils/UserContext';
 
 export default function Login(props) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [invalid, setInvalid] = useState(false);
   const [loginView, setLogin] = useState(false);
   const {user,setUser} = useContext(UserContext)
 
@@ -17,6 +18,9 @@ export default function Login(props) {
 
   const existingUser = (e) =>{
     e.preventDefault();
+    setUsername("");
+    setPassword("");
+    setInvalid(false);
     setLogin(!loginView)
   }
 
@@ -26,8 +30,8 @@ export default function Login(props) {
       // setLoading(true);
       try {
           const { data: response } = await api.register({
-              "username": "Ronaldo",
-              "password":"Kanye"
+              "username": username,
+              "password": password
           });
           // setBackendData(response);
       } catch (error) {
@@ -38,22 +42,18 @@ export default function Login(props) {
 
   const login = async(e) => {
     e.preventDefault();
+    setInvalid(false);
     // setLoading(true);
     try {
 
         const { data: response } = await api.login({
-          "username":"Rooney",
-          "password": "sdfdasfsadf"
+          "username": username,
+          "password": password
       });
-    //   console.log(response.token);
-    //   const validated  = await api.validate({
-    //     }, {
-    //   headers: { Authorization: `Bearer ${response.token}` }
-    // }
-    
-    // ); 
+        console.log("Checking log in response: ", response);
         setUser(response);
     } catch (error) {
+        setInvalid(true);
         console.error(error.message);
     }
     // setLoading(false);
@@ -69,6 +69,10 @@ export default function Login(props) {
     
     <Field>
       <Legend>{loginView ? "Log In": "Create an account"}</Legend>
+      {invalid
+        ? <Error>Invalid Username or Password</Error>
+        : ""
+      }
       <List>
         <ListItem>
           <Label>Username:</Label>

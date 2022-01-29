@@ -18,7 +18,6 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
 
 const sign_up = (req: Request, res: Response, next: NextFunction) => {
     let { username, password, weight } = req.body;
-    console.log('IN SIGN UP');
     bcryptjs.hash(password, 10, (hashError, hash) => {
         if (hashError) {
             return res.status(401).json({
@@ -52,23 +51,23 @@ const sign_up = (req: Request, res: Response, next: NextFunction) => {
 
 const login = (req: Request, res: Response, next: NextFunction) => {
     let { username, password } = req.body;
-
+    console.log('1');
     User.find({ username })
         .exec()
         .then((users) => {
-            console.log(users);
+            console.log('2');
             if (users.length !== 1) {
                 return res.status(401).json({
                     message: 'Unauthorized'
                 });
             }
+            console.log('Checking Passwords', password);
+            console.log('Checking Passwords', users[0].password);
 
             bcryptjs.compare(password, users[0].password, (error, result) => {
-                if (error) {
-                    return res.status(401).json({
-                        message: 'Password Mismatch'
-                    });
-                } else if (result) {
+                if (result) {
+                    console.log('4');
+                    console.log('Check result', result);
                     signJWT(users[0], (_error, token) => {
                         if (_error) {
                             return res.status(500).json({
@@ -83,12 +82,19 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                             });
                         }
                     });
+                } else {
+                    return res.status(401).json({
+                        message: 'Password Mismatch'
+                    });
                 }
+                console.log('5');
             });
+            console.log('6');
         })
         .catch((err) => {
+            console.log('7');
             console.log(err);
-            res.status(500).json({
+            return res.status(500).json({
                 error: err
             });
         });
