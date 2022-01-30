@@ -9,7 +9,6 @@ function WelcomePage() {
     <>
     <Section>
       <Login/>
-      <Link to="/dashboard">Dashboard</Link>
     </Section>  
     </>
   )

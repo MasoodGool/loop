@@ -16,37 +16,45 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     });
 };
 
-const sign_up = (req: Request, res: Response, next: NextFunction) => {
-    let { username, password, weight } = req.body;
-    bcryptjs.hash(password, 10, (hashError, hash) => {
-        if (hashError) {
-            return res.status(401).json({
-                message: hashError.message,
-                error: hashError
-            });
-        }
+const sign_up = async (req: Request, res: Response, next: NextFunction) => {
+    let { username, password } = req.body;
 
-        const _user = new User({
-            _id: new mongoose.Types.ObjectId(),
-            username,
-            password: hash,
-            weight
+    let taken = await User.find({ username }).exec();
+
+    if (taken.length !== 0) {
+        return res.status(401).json({
+            error: 'Username taken, please try another username'
         });
+    } else {
+        bcryptjs.hash(password, 10, (hashError, hash) => {
+            if (hashError) {
+                return res.status(401).json({
+                    message: hashError.message,
+                    error: hashError
+                });
+            }
 
-        return _user
-            .save()
-            .then((user) => {
-                return res.status(201).json({
-                    user
-                });
-            })
-            .catch((error) => {
-                return res.status(500).json({
-                    message: error.message,
-                    error
-                });
+            const _user = new User({
+                _id: new mongoose.Types.ObjectId(),
+                username,
+                password: hash
             });
-    });
+
+            return _user
+                .save()
+                .then((user) => {
+                    return res.status(201).json({
+                        user
+                    });
+                })
+                .catch((error) => {
+                    return res.status(500).json({
+                        message: error.message,
+                        error
+                    });
+                });
+        });
+    }
 };
 
 const login = (req: Request, res: Response, next: NextFunction) => {
@@ -61,8 +69,6 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                     message: 'Unauthorized'
                 });
             }
-            console.log('Checking Passwords', password);
-            console.log('Checking Passwords', users[0].password);
 
             bcryptjs.compare(password, users[0].password, (error, result) => {
                 if (result) {
@@ -126,9 +132,9 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const saveWeight = (req: Request, res: Response, next: NextFunction) => {
-    let { username, password } = req.body;
+    let { username, weight } = req.body;
 
-    User.updateOne({ username: username }, { $push: { weight: 33.21 } })
+    User.updateOne({ username: username }, { $push: { weight: weight } })
         .exec()
         .then((user) => {
             console.log(user);
@@ -145,7 +151,7 @@ const saveWeight = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getWeights = (req: Request, res: Response, next: NextFunction) => {
-    let { username } = req.query;
+    let { username } = req.body;
     User.findOne({ username: username })
         .select('weight')
         .exec()

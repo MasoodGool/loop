@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext} from 'react';
+import { useNavigate } from "react-router-dom";
 import api from '../api'
-import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error } from './FormStyles'
+import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error, Success } from './FormStyles'
 import { UserContext } from '../utils/UserContext';
 
 export default function Login(props) {
@@ -8,8 +9,12 @@ export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [invalid, setInvalid] = useState(false);
-  const [loginView, setLogin] = useState(false);
+  const [userTaken, setUserTaken] = useState(false);
+  const [registered, setRegistered] = useState(false);
+  const [loginView, setLogin] = useState(true);
   const {user,setUser} = useContext(UserContext)
+
+  let navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,8 +25,10 @@ export default function Login(props) {
     e.preventDefault();
     setUsername("");
     setPassword("");
+    setRegistered(false);
     setInvalid(false);
     setLogin(!loginView)
+    setUserTaken(false);
   }
 
 
@@ -33,8 +40,13 @@ export default function Login(props) {
               "username": username,
               "password": password
           });
-          // setBackendData(response);
+          setRegistered(true);
+          setLogin(!loginView)
+          setUsername("");
+          setPassword("");
+          setUserTaken(false);
       } catch (error) {
+          setUserTaken(true);
           console.error(error.message);
       }
       // setLoading(false);
@@ -43,20 +55,20 @@ export default function Login(props) {
   const login = async(e) => {
     e.preventDefault();
     setInvalid(false);
-    // setLoading(true);
+    setRegistered(false);
+    setUserTaken(false);
     try {
 
         const { data: response } = await api.login({
           "username": username,
           "password": password
       });
-        console.log("Checking log in response: ", response);
         setUser(response);
+        navigate('/dashboard');
     } catch (error) {
         setInvalid(true);
         console.error(error.message);
     }
-    // setLoading(false);
 }
 
 
@@ -65,12 +77,18 @@ export default function Login(props) {
   <Form onSubmit={handleSubmit}>
     <Heading>{loginView ? "Welcome Back!" : "Sign Up"}</Heading>
     
-    <pre>{JSON.stringify(user,null,2)}</pre>
-    
     <Field>
       <Legend>{loginView ? "Log In": "Create an account"}</Legend>
+      {registered
+        ? <Success>Account Created, please login</Success>
+        : ""
+      }
       {invalid
         ? <Error>Invalid Username or Password</Error>
+        : ""
+      }
+      {userTaken
+        ? <Error>Username taken</Error>
         : ""
       }
       <List>
