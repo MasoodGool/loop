@@ -64,6 +64,7 @@ export default function Login(props) {
           "password": password
       });
         setUser(response);
+        localStorage.setItem('user', response);
         navigate('/dashboard');
     } catch (error) {
         setInvalid(true);

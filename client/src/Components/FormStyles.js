@@ -116,17 +116,25 @@ const Section = styled.section `
 
 
 const Dash = styled.div `
-    grid-column: 1;
-    grid-row: 2;
+    grid-column: 2;
+    grid-row: 1;
     display: grid;
     grid-gap: 10px;
-    margin: auto 0;
+    margin: 50px 0px 1px 0px;
     padding: 20px;
     background-color: rgba(255,255,255,0.9);
     border-radius: 10px;
     box-shadow: 0 32px 64px rgba(0,0,0,0.2);
 `
 
+const Chart = styled(Dash)
+`
+    grid-column: 2;
+    grid-row: 3;
+    grid-column: span 3;
+    margin: 0px 50px 50px 50px;
+`
 
 
-export { Section, Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error, Success, Dash };
+
+export { Section, Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error, Success, Dash, Chart };

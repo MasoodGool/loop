@@ -8,7 +8,8 @@ const UserSchema: Schema = new Schema(
         password: { type: String, required: true },
         weight: [
             {
-                type: Number
+                weight: Number,
+                date: Date
             }
         ]
     },

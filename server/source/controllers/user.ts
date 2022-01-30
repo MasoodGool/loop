@@ -59,11 +59,9 @@ const sign_up = async (req: Request, res: Response, next: NextFunction) => {
 
 const login = (req: Request, res: Response, next: NextFunction) => {
     let { username, password } = req.body;
-    console.log('1');
     User.find({ username })
         .exec()
         .then((users) => {
-            console.log('2');
             if (users.length !== 1) {
                 return res.status(401).json({
                     message: 'Unauthorized'
@@ -72,8 +70,6 @@ const login = (req: Request, res: Response, next: NextFunction) => {
 
             bcryptjs.compare(password, users[0].password, (error, result) => {
                 if (result) {
-                    console.log('4');
-                    console.log('Check result', result);
                     signJWT(users[0], (_error, token) => {
                         if (_error) {
                             return res.status(500).json({
@@ -93,12 +89,9 @@ const login = (req: Request, res: Response, next: NextFunction) => {
                         message: 'Password Mismatch'
                     });
                 }
-                console.log('5');
             });
-            console.log('6');
         })
         .catch((err) => {
-            console.log('7');
             console.log(err);
             return res.status(500).json({
                 error: err
@@ -133,8 +126,13 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
 
 const saveWeight = (req: Request, res: Response, next: NextFunction) => {
     let { username, weight } = req.body;
+    let date = new Date();
+    let update = {
+        weight: weight,
+        date: date
+    };
 
-    User.updateOne({ username: username }, { $push: { weight: weight } })
+    User.updateOne({ username: username }, { $push: { weight: update } })
         .exec()
         .then((user) => {
             console.log(user);

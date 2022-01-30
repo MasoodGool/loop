@@ -1,11 +1,12 @@
 import { Document, Types } from 'mongoose';
 
 interface IWeight {
-    value: number;
+    weight: number;
+    date: Date;
 }
 
 export default interface IUser extends Document {
     username: string;
     password: string;
-    weight: Array<number>;
+    weight: Array<IWeight>;
 }
