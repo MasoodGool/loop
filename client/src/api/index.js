@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const login = (payload) => api.post(`/login`, payload);
 export const register = payload => api.post(`/sign_up`, payload);
-export const getUserById = (payload, config) => api.post(`/get_weight_history`, payload, config);
+export const getUserById = (payload) => api.get(`/get_weight_history`, payload);
 export const updateUserById = (payload, config) => api.put(`/save_weight`, payload, config);
 
 const apis = {

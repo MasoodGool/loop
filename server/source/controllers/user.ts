@@ -140,7 +140,7 @@ const saveWeight = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getWeights = (req: Request, res: Response, next: NextFunction) => {
-    let { username } = req.body;
+    let { username } = req.query;
     User.findOne({ username: username })
         .select('weight')
         .exec()

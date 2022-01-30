@@ -13,9 +13,17 @@ function Dashboard() {
     const [weight, setWeight] = useState("");
 
     useEffect(()=>{
+
+      const payload = {
+        params:{
+          "username": user.user.username
+        },
+        headers: {'Authorization': `Bearer ${user.token}`}
+      }
+
       const fetchData = async () =>{
         try {
-          const {data: response} = await api.getUserById({username: user.user.username}, {headers: {'Authorization': `Bearer ${user.token}` }});
+          const {data: response} = await api.getUserById(payload);
           setBackendData(response);
           setChartData(response.users.weight);
         } catch (error) {
@@ -27,9 +35,15 @@ function Dashboard() {
 
       const trackWeight = async(e) => {
         e.preventDefault();
+        const payload = {
+          params:{
+            "username": user.user.username
+          },
+          headers: {'Authorization': `Bearer ${user.token}`}
+        }
         try {
             await api.updateUserById({username: user.user.username, weight: weight}, {headers: {'Authorization': `Bearer ${user.token}` }});
-            const {data: response} = await api.getUserById({username: user.user.username}, {headers: {'Authorization': `Bearer ${user.token}` }});
+            const {data: response} = await api.getUserById(payload);
             setBackendData(response);
             setWeight("");
         } catch (error) {

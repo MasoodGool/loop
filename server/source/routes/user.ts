@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/sign_up', controller.sign_up);
 router.post('/login', controller.login);
 router.put('/save_weight', extractJWT, controller.saveWeight);
-router.post('/get_weight_history', extractJWT, controller.getWeights);
+router.get('/get_weight_history', extractJWT, controller.getWeights);
 
 export = router;
