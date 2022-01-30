@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    image: "masood/loopserver"
+    ports:
+      - "8000:8000"
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    image: "masood/loopclient"
+    ports:
+      - "3000:3000"
+    links:
+      - "server:be"
