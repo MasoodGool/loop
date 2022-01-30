@@ -7,15 +7,6 @@ import signJWT from '../functions/signJWT';
 
 const NAMESPACE = 'Users';
 
-const validateToken = (req: Request, res: Response, next: NextFunction) => {
-    logging.info(NAMESPACE, 'Token validated, user authorized.');
-
-    return res.status(200).json({
-        message: 'Token(s) validated',
-        validated: true
-    });
-};
-
 const sign_up = async (req: Request, res: Response, next: NextFunction) => {
     let { username, password } = req.body;
 
@@ -160,4 +151,4 @@ const getWeights = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
-export default { createUser, validateToken, sign_up, login, saveWeight, getWeights };
+export default { createUser, sign_up, login, saveWeight, getWeights };
