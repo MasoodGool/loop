@@ -1,10 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate
-} from "react-router-dom";
+import { BrowserRouter, Routes,Route} from "react-router-dom";
 import WelcomePage from './Routes/WelcomePage';
 import { UserContext } from './utils/UserContext';
 import Dashboard from './Routes/Dashboard';
@@ -20,12 +15,8 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={value}>
         <Routes>
-
             <Route path="/" element={<WelcomePage />} />
-
-
           <Route path="/dashboard" element={<Dashboard/>} />  
-
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>

@@ -64,7 +64,6 @@ function Dashboard() {
             <Tooltip />
         </LineChart>
         </Chart>
-                
       </Section>
         </>
     )

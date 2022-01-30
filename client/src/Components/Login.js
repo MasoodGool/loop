@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext} from 'react';
+import React, { useState, useContext} from 'react';
 import { useNavigate } from "react-router-dom";
 import api from '../api'
 import { Form, Heading, Field, Legend, List, ListItem, Label, Input, Button, Error, Success } from './FormStyles'
@@ -31,10 +31,8 @@ export default function Login(props) {
     setUserTaken(false);
   }
 
-
   const createProfile = async(e) => {
     e.preventDefault();
-      // setLoading(true);
       try {
           const { data: response } = await api.register({
               "username": username,
@@ -49,7 +47,6 @@ export default function Login(props) {
           setUserTaken(true);
           console.error(error.message);
       }
-      // setLoading(false);
   }
 
   const login = async(e) => {
@@ -58,13 +55,11 @@ export default function Login(props) {
     setRegistered(false);
     setUserTaken(false);
     try {
-
         const { data: response } = await api.login({
           "username": username,
           "password": password
       });
         setUser(response);
-        localStorage.setItem('user', response);
         navigate('/dashboard');
     } catch (error) {
         setInvalid(true);
@@ -72,26 +67,23 @@ export default function Login(props) {
     }
 }
 
-
-
   return (
   <Form onSubmit={handleSubmit}>
     <Heading>{loginView ? "Welcome Back!" : "Sign Up"}</Heading>
-    
     <Field>
       <Legend>{loginView ? "Log In": "Create an account"}</Legend>
-      {registered
-        ? <Success>Account Created, please login</Success>
-        : ""
-      }
-      {invalid
-        ? <Error>Invalid Username or Password</Error>
-        : ""
-      }
-      {userTaken
-        ? <Error>Username taken</Error>
-        : ""
-      }
+        {registered
+          ? <Success>Account Created, please login</Success>
+          : ""
+        }
+        {invalid
+          ? <Error>Invalid Username or Password</Error>
+          : ""
+        }
+        {userTaken
+          ? <Error>Username taken</Error>
+          : ""
+        }
       <List>
         <ListItem>
           <Label>Username:</Label>
@@ -103,15 +95,12 @@ export default function Login(props) {
         </ListItem>
       </List>
     </Field>
-
       {loginView
         ? <Button onClick={login}>Login</Button>
         : <Button onClick={createProfile}>Register</Button>
       }
     <Button onClick={existingUser}>{loginView ? "Create an account": "Already have an account"}</Button>
-    <Button onClick={()=> setUser(null)}>Logout</Button>
   </Form>
-  
   )
 }
 
