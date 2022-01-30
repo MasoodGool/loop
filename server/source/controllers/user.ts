@@ -13,7 +13,7 @@ const sign_up = async (req: Request, res: Response, next: NextFunction) => {
     let taken = await User.find({ username }).exec();
 
     if (taken.length !== 0) {
-        return res.status(401).json({
+        return res.status(409).json({
             error: 'Username taken, please try another username'
         });
     } else {
@@ -127,7 +127,7 @@ const saveWeight = (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then((user) => {
             console.log(user);
-            res.status(200).json({
+            res.status(201).json({
                 user
             });
         })

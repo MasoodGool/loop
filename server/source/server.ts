@@ -6,10 +6,13 @@ import logging from './config/logging';
 import config from './config/config';
 import userRoutes from './routes/user';
 import mongoose from 'mongoose';
+import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from './utils/swagger';
 
 const NAMESPACE = 'Server';
 const app = express();
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /** Connect to Mongo */
 mongoose
@@ -80,6 +83,6 @@ app.use((req, res, next) => {
 const httpServer = http.createServer(app);
 
 httpServer.listen(config.server.port, () => {
+    logging.info('SWAGGER', `Docs available at http://localhost:${config.server.port}/api/docs`);
     logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`);
-    swaggerDocs(app, config.server.port);
 });

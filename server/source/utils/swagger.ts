@@ -1,20 +1,15 @@
-import { Express, Request, Response } from 'express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
 import { version } from '../../package.json';
-import log from '../config/logging';
+import swaggerJsdoc from 'swagger-jsdoc';
 
-const NAMESPACE = 'SWAGGER';
-
-const options: swaggerJsdoc.Options = {
-    definition: {
+const swaggerOptions = {
+    swaggerDefinition: {
         openapi: '3.0.0',
         info: {
-            title: 'LOOP REST API Docs',
+            title: 'Loop Weight Tracker REST API Docs',
             version
         },
         components: {
-            securitySchemas: {
+            securitySchemes: {
                 bearerAuth: {
                     type: 'http',
                     scheme: 'bearer',
@@ -28,22 +23,9 @@ const options: swaggerJsdoc.Options = {
             }
         ]
     },
-    apis: ['./src/routes.ts', './src/schema/*.ts']
+    apis: ['./source/routes/user.ts', './source/interfaces/user.ts']
 };
 
-const swaggerSpec = swaggerJsdoc(options);
-
-function swaggerDocs(app: Express, port: string | number) {
-    // Swagger page
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-    // Docs in JSON format
-    app.get('/docs.json', (req: Request, res: Response) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(swaggerSpec);
-    });
-
-    log.info(NAMESPACE, `Docs available at http://localhost:${port}/docs`);
-}
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 export default swaggerDocs;

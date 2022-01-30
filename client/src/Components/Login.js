@@ -8,9 +8,9 @@ export default function Login(props) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [invalid, setInvalid] = useState(false);
-  const [userTaken, setUserTaken] = useState(false);
-  const [registered, setRegistered] = useState(false);
+  const [invalid, setInvalidUser] = useState(false);
+  const [userTaken, setUsernameTaken] = useState(false);
+  const [registered, setRegisteredUser] = useState(false);
   const [loginView, setLogin] = useState(true);
   const {user,setUser} = useContext(UserContext)
 
@@ -25,10 +25,10 @@ export default function Login(props) {
     e.preventDefault();
     setUsername("");
     setPassword("");
-    setRegistered(false);
-    setInvalid(false);
+    setRegisteredUser(false);
+    setInvalidUser(false);
     setLogin(!loginView)
-    setUserTaken(false);
+    setUsernameTaken(false);
   }
 
   const createProfile = async(e) => {
@@ -38,22 +38,22 @@ export default function Login(props) {
               "username": username,
               "password": password
           });
-          setRegistered(true);
+          setRegisteredUser(true);
           setLogin(!loginView)
           setUsername("");
           setPassword("");
-          setUserTaken(false);
+          setUsernameTaken(false);
       } catch (error) {
-          setUserTaken(true);
+          setUsernameTaken(true);
           console.error(error.message);
       }
   }
 
   const login = async(e) => {
     e.preventDefault();
-    setInvalid(false);
-    setRegistered(false);
-    setUserTaken(false);
+    setInvalidUser(false);
+    setRegisteredUser(false);
+    setUsernameTaken(false);
     try {
         const { data: response } = await api.login({
           "username": username,
@@ -62,7 +62,7 @@ export default function Login(props) {
         setUser(response);
         navigate('/dashboard');
     } catch (error) {
-        setInvalid(true);
+        setInvalidUser(true);
         console.error(error.message);
     }
 }
