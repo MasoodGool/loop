@@ -13,11 +13,19 @@ You can run the docker volume using
 docker-compose up
 ```
 
-Use Node 16.13.2.
+To run it locally on your computer use Node 16.13.2.
 
 There is a client side and server side to the application
 
 To run the client navigate in to the directory and run 
+
+Install the node_modules
+
+```bash
+npm install
+```
+
+To run the application
 
 ```bash
 npm start
@@ -26,6 +34,14 @@ npm start
 The client will run on port 3000
 
 To run the server navigate in to the directory and run 
+
+Install the node_modules
+
+```bash
+npm install
+```
+
+To run the application
 
 ```bash
 npm run dev
